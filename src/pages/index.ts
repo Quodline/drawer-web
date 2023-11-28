@@ -1,1 +1,3 @@
-export { HomePage } from './Home';
+export { HomePage } from './home.tsx';
+export { LoginPage } from './login.tsx';
+export { RegisterPage } from './register.tsx';
