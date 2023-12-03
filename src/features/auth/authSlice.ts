@@ -1,20 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { AuthState } from './types';
 
-const userInfoJson = localStorage.getItem('userInfo');
-
 const initialState: AuthState = {
   error: null,
   loading: false,
-  userInfo: userInfoJson ? JSON.parse(userInfoJson) : null,
+  userInfo: null,
 };
+
+const userInfoJson = localStorage.getItem('userInfo');
+initialState.userInfo = userInfoJson ? JSON.parse(userInfoJson) : null;
 
 const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     clear(state) {
-      state.userInfo = null;
+      return Object.assign(state, initialState);
     },
     loading(state) {
       state.loading = true;
