@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 import { Button } from '@/components';
@@ -12,10 +11,6 @@ export function HomePage() {
   const handleLogout = () => {
     dispatch(logout(navigate));
   };
-
-  useEffect(() => {
-    userInfo || navigate('/login');
-  }, [navigate, userInfo]);
 
   return (
     <main>

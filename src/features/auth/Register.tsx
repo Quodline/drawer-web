@@ -1,22 +1,15 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Button, Errors, Input } from '@/components';
-import type { LoginReq } from './types';
+import type { RegisterReq } from './types';
 import { register as registerAction } from './authActions.ts';
 import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 
 export function RegisterPage() {
-  const { loading, error, userInfo } = useAppSelector((state) => state.auth);
-  const { register, handleSubmit } = useForm<LoginReq>();
+  const { loading, error } = useAppSelector((state) => state.auth);
+  const { register, handleSubmit } = useForm<RegisterReq>();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    userInfo && navigate('/');
-  }, [navigate, userInfo]);
-
-  const submitForm = (data: LoginReq) => {
+  const submitForm = (data: RegisterReq) => {
     dispatch(registerAction(data));
   };
 
