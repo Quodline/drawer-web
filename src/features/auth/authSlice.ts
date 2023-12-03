@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { login, register } from '@/features/auth/authActions.ts';
-import { AuthState } from '@/types/auth/auth-state';
-import { UserInfo } from '@/types/auth/user-info';
+import { login, register } from './authActions.ts';
+import type { AuthState, UserInfo } from './types';
 
 const userInfoJson = localStorage.getItem('userInfo');
 
@@ -15,10 +14,12 @@ const isLoading = (state: AuthState) => {
   state.loading = true;
   state.error = null;
 };
+
 const isFulfilled = (state: AuthState, action: PayloadAction<UserInfo>) => {
   state.loading = false;
   state.userInfo = action.payload;
 };
+
 const isRejected = (
   state: AuthState,
   action: PayloadAction<AuthState['error']>,
@@ -30,7 +31,11 @@ const isRejected = (
 const slice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    clear(state) {
+      state.userInfo = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(register.pending, isLoading);
     builder.addCase(register.fulfilled, isFulfilled);
@@ -41,4 +46,5 @@ const slice = createSlice({
   },
 });
 
+export const { clear } = slice.actions;
 export const authReducer = slice.reducer;

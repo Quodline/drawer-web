@@ -1,16 +1,13 @@
-import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Button, Errors, Input } from '@/components';
-import { login } from '@/features/auth/authActions.ts';
-import { RootState, useAppDispatch } from '@/lib/store.ts';
-import type { LoginReq } from '@/types/auth/login-req';
+import type { LoginReq } from './types';
+import { register as registerAction } from './authActions.ts';
+import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 
-export function LoginPage() {
-  const { loading, userInfo, error } = useSelector(
-    (state: RootState) => state.auth,
-  );
+export function RegisterPage() {
+  const { loading, error, userInfo } = useAppSelector((state) => state.auth);
   const { register, handleSubmit } = useForm<LoginReq>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,7 +17,7 @@ export function LoginPage() {
   }, [navigate, userInfo]);
 
   const submitForm = (data: LoginReq) => {
-    dispatch(login(data));
+    dispatch(registerAction(data));
   };
 
   return (
@@ -29,7 +26,7 @@ export function LoginPage() {
         className="flex min-w-[24rem] flex-col gap-8 rounded-2xl border-4 p-4 shadow-2xl"
         onSubmit={handleSubmit(submitForm)}
       >
-        <h1 className="text-center text-2xl font-bold">Sign in</h1>
+        <h1 className="text-center text-2xl font-bold">Register</h1>
         <div className="flex flex-col gap-4">
           <div>
             <label htmlFor="email">Email</label>
@@ -42,7 +39,7 @@ export function LoginPage() {
         </div>
         {error ? <Errors errors={error.message} /> : null}
         <Button type="submit" disabled={loading}>
-          {loading ? 'Please wait...' : 'Sign in'}
+          {loading ? 'Please wait...' : 'Sign up'}
         </Button>
       </form>
     </main>

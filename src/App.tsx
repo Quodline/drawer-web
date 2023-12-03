@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage } from './pages';
+import { LoginPage, RegisterPage } from './features/auth';
+import { HomePage } from './features/dashboard';
 
 function App() {
   return (

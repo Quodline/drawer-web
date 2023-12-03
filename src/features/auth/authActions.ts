@@ -1,17 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import type { LoginReq } from '@/types/auth/login-req';
-import { axiosInstance } from '@/lib/axios-instance.ts';
-import type { AuthState } from '@/types/auth/auth-state';
-import { UserInfo } from '@/types/auth/user-info';
+import { NavigateFunction } from 'react-router-dom';
+import { axiosInstance } from '@/app/axios-instance.ts';
+import type { AuthState, LoginReq, RegisterReq, UserInfo } from './types';
+import { clear } from './authSlice.ts';
+import { AppThunk } from '@/app/store.ts';
 
 type IThunkApi = {
   rejectValue: AuthState['error'];
 };
 
-export const register = createAsyncThunk<UserInfo, LoginReq, IThunkApi>(
-  'auth/register',
-  async (reqBody: LoginReq, { rejectWithValue }) => {
+export const register = createAsyncThunk<UserInfo, RegisterReq, IThunkApi>(
+  'types/register',
+  async (reqBody: RegisterReq, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post('auth/signup', reqBody);
       localStorage.setItem('userInfo', JSON.stringify(data));
@@ -25,7 +26,7 @@ export const register = createAsyncThunk<UserInfo, LoginReq, IThunkApi>(
 );
 
 export const login = createAsyncThunk<UserInfo, LoginReq, IThunkApi>(
-  'auth/login',
+  'types/login',
   async (reqBody: LoginReq, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post('auth/signin', reqBody);
@@ -38,3 +39,11 @@ export const login = createAsyncThunk<UserInfo, LoginReq, IThunkApi>(
     }
   },
 );
+
+export const logout = (navigate: NavigateFunction): AppThunk => {
+  return (dispatch) => {
+    localStorage.removeItem('userInfo');
+    navigate('/login');
+    dispatch(clear());
+  };
+};
