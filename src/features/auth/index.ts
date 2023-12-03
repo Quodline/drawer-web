@@ -1,2 +1,2 @@
-export { LoginPage } from './Login.tsx';
-export { RegisterPage } from './Register.tsx';
+export { LoginPage } from './pages/Login.tsx';
+export { RegisterPage } from './pages/Register.tsx';

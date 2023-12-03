@@ -1,33 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { AuthState } from './types';
+import type { AuthState, LoginResponse } from './types';
+
+const userInfoJson = localStorage.getItem('userInfo');
+const userInfo: LoginResponse = userInfoJson ? JSON.parse(userInfoJson) : null;
 
 const initialState: AuthState = {
   error: null,
   loading: false,
-  userInfo: null,
+  userInfo,
+  userToken: userInfo?.token,
 };
-
-const userInfoJson = localStorage.getItem('userInfo');
-initialState.userInfo = userInfoJson ? JSON.parse(userInfoJson) : null;
 
 const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     clear(state) {
-      return Object.assign(state, initialState);
+      state.userInfo = null;
+      state.userToken = null;
     },
     loading(state) {
       state.loading = true;
       state.error = null;
     },
-    fulfilled(state, action) {
+    fulfilled(state, { payload }) {
       state.loading = false;
-      state.userInfo = action.payload;
+      state.userInfo = payload;
+      state.userToken = payload.token;
     },
-    rejected(state, action) {
+    rejected(state, { payload }) {
       state.loading = false;
-      state.error = action.payload;
+      state.error = payload;
     },
   },
 });
