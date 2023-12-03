@@ -1,12 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
-import { LoginPage, RegisterPage } from './features/auth';
-import { HomePage } from './features/dashboard';
+import { ProtectedRoute } from '@/ProtectedRoute.tsx';
+import { HomePage } from '@/features/dashboard';
+import { LoginPage, RegisterPage } from '@/features/auth';
 
 function App() {
   return (
     <main>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
