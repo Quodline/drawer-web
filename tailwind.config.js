@@ -16,6 +16,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'rubik-vinyl': ['Rubik Vinyl', 'cursive'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: 0 },

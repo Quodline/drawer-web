@@ -4,5 +4,5 @@ import { Navigate, Outlet } from 'react-router-dom';
 export function ProtectedRoute() {
   const { userToken } = useAppSelector((state) => state.auth);
 
-  return userToken ? <Outlet /> : <Navigate to="/login" />;
+  return userToken ? <Outlet /> : <Navigate to="/auth" />;
 }

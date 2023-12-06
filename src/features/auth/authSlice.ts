@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { AuthState, LoginResponse } from './types';
+import type { AuthState, LoginResponse } from './auth';
 
 const userInfoJson = localStorage.getItem('userInfo');
 const userInfo: LoginResponse = userInfoJson ? JSON.parse(userInfoJson) : null;

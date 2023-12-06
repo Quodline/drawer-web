@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios';
 import { NavigateFunction } from 'react-router-dom';
-import { axiosInstance } from '@/app/axios-instance.ts';
-import type { LoginReq, RegisterReq } from './types';
-import { clear, fulfilled, loading, rejected } from './authSlice.ts';
-import { AppThunk } from '@/app/store.ts';
+import { axiosInstance } from '@/app/axios-instance';
+import type { LoginReq, RegisterReq } from './auth';
+import { clear, fulfilled, loading, rejected } from './authSlice';
+import { AppThunk } from '@/app/store';
 
 const apiAuth =
   (endPoint: string) =>
@@ -27,6 +27,6 @@ export const logout =
   (navigate: NavigateFunction): AppThunk =>
   (dispatch) => {
     localStorage.removeItem('userInfo');
-    navigate('/login');
+    navigate('/auth');
     dispatch(clear());
   };

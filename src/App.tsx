@@ -1,19 +1,19 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from '@/ProtectedRoute.tsx';
-import { HomePage } from '@/features/dashboard';
-import { LoginPage, RegisterPage } from '@/features/auth';
+import { AuthPage } from '@/features/auth/AuthPage.tsx';
+import { HomePage } from '@/features/dashboard/HomePage.tsx';
 
 function App() {
   return (
-    <main>
+    <div className="flex min-h-screen flex-col bg-gray-100">
       <Routes>
+        <Route path="/" element={<Navigate to="auth" />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard/*" element={<HomePage />} />
         </Route>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
       </Routes>
-    </main>
+    </div>
   );
 }
 
